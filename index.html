@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi programa</title>
+</head>
+<body>
+
+    <h1>Gestión de Dietética</h1> <!--titulo-->
+
+<p>Bienvenido a mi programa.</p> <!--texto-->
+
+<button>Agregar producto</button>
+<button onclick="verProductos()">Ver productos</button>
+<!-- Acá aparecerá la lista de productos -->
+<div id="listaProductos"></div>
+<h2>Faltantes</h2>
+
+<p>Producto que falta:</p>
+<input type="text" id="nombreFaltante" placeholder="Ej: Harina de arroz">
+
+<p>Proveedor:</p>
+<select id="proveedorFaltante">
+    <option value="">Seleccionar proveedor</option>
+    <option value="Alicante">Alicante</option>
+    <option value="Proveedor 2">Proveedor 2</option>
+    <option value="Proveedor 3">Proveedor 3</option>
+</select>
+
+<br><br>
+
+<button onclick="agregarFaltante()">Agregar faltante</button>
+
+<hr>
+
+<button onclick="verFaltantes()">Ver faltantes</button>
+
+<p>Filtrar por proveedor:</p>
+<input type="text" id="filtroProveedor" placeholder="Ej: Alicante">
+
+<button onclick="filtrarFaltantes()">Filtrar</button>
+
+<div id="listaFaltantes"></div>
+<hr>
+
+<h2>Proveedores</h2>
+
+<input type="text" id="nombreProveedor" placeholder="Nombre del proveedor">
+
+<button onclick="agregarProveedor()">Agregar proveedor</button>
+
+<button onclick="verProveedores()">Ver proveedores</button>
+
+<div id="listaProveedores"></div>
+
+<button onclick="filtrarFaltantes()">Filtrar</button>
+
+<div id="listaFaltantes"></div>
+<button> Productos nuevos</button>
+<button>faltantes</button>
+<!-- Formulario para agregar un producto -->
+<h2>Agregar producto</h2>
+
+<input type="text" id="nombre" placeholder="Nombre del producto">
+<select id="proveedorFaltante">
+    <option value="">Seleccionar proveedor</option>
+    <option value="Alicante">Alicante</option>
+    <option value="Proveedor 2">Proveedor 2</option>
+    <option value="Proveedor 3">Proveedor 3</option>
+</select>
+
+
+<input type="number" id="precio" placeholder="Precio">
+
+<input type="number" id="cantidad" placeholder="Cantidad">
+
+<button onclick="guardarProducto()">Guardar producto</button>
+
+
+<script src="script.js"></script>
+</body>
+</html>
