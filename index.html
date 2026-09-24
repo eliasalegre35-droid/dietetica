@@ -3,81 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi programa</title>
+    <title>Gestión de Dietética</title>
+    <style>
+        :root {
+            --bg: #f5f7fa;
+            --panel: #ffffff;
+            --text: #111827;
+            --muted: #6b7280;
+            --border: #e5e7eb;
+            --shadow: 0 2px 8px rgba(17, 24, 39, 0.04);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .app {
+            max-width: 460px;
+            margin: 0 auto;
+            padding: 12px 12px 40px;
+        }
+
+        .header {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 18px 16px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow);
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 2rem;
+        }
+
+        .header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .tab-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 6px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow);
+        }
+
+        .tab {
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            border-radius: 10px;
+            min-height: 40px;
+            font-weight: 700;
+            font-size: 0.82rem;
+        }
+
+        .tab.active {
+            background: var(--text);
+            color: white;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        .panel {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 14px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow);
+        }
+
+        .panel h2 {
+            margin: 0 0 18px;
+            font-size: 1.2rem;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        input, select, button {
+            font: inherit;
+        }
+
+        input, select {
+            width: 100%;
+            min-height: 48px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            color: var(--text);
+            padding: 12px 14px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--text);
+        }
+
+        .button-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        button {
+            border: none;
+            border-radius: 12px;
+            min-height: 46px;
+            padding: 12px 14px;
+            font-weight: 700;
+            cursor: pointer;
+            flex: 1 1 140px;
+        }
+
+        .primary-btn { background: var(--text); color: white; }
+        .secondary-btn { background: #f3f4f6; color: var(--text); }
+        .success-btn { background: var(--text); color: white; }
+        .warning-btn { background: #f3f4f6; color: var(--text); }
+
+        .list {
+            margin-top: 16px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .item {
+            background: #f9fafb;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 12px;
+        }
+
+        .item h3 {
+            margin: 0 0 8px;
+            font-size: 1.05rem;
+        }
+
+        .item p {
+            margin: 6px 0;
+            color: var(--muted);
+        }
+
+        .empty {
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            color: var(--muted);
+            background: #fafafa;
+        }
+
+        .mini-note {
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-top: 0;
+        }
+    </style>
 </head>
 <body>
+    <div class="app">
+        <header class="header">
+            <h1>Gestión de Dietética</h1>
+            <p>Faltantes, remitos y stock.</p>
+        </header>
 
-    <h1>Gestión de Dietética</h1> <!--titulo-->
+        <nav class="tab-bar" aria-label="Navegación principal">
+            <button class="tab active" data-tab="faltantes">Faltantes</button>
+            <button class="tab" data-tab="remitos">Remitos</button>
+            <button class="tab" data-tab="stock">Stock</button>
+        </nav>
 
-<p>Bienvenido a mi programa.</p> <!--texto-->
+        <section id="tab-faltantes" class="tab-panel active">
+            <div class="panel">
+                <h2>Faltantes del día</h2>
 
-<button>Agregar producto</button>
-<button onclick="verProductos()">Ver productos</button>
-<!-- Acá aparecerá la lista de productos -->
-<div id="listaProductos"></div>
-<h2>Faltantes</h2>
+                <div class="field">
+                    <label for="nombreFaltante">Producto que falta</label>
+                    <input type="text" id="nombreFaltante" placeholder="Ej: Harina de arroz">
+                </div>
 
-<p>Producto que falta:</p>
-<input type="text" id="nombreFaltante" placeholder="Ej: Harina de arroz">
+                <div class="field">
+                    <label for="proveedorFaltante">Proveedor</label>
+                    <select id="proveedorFaltante">
+                        <option value="">Seleccionar proveedor</option>
+                    </select>
+                </div>
 
-<p>Proveedor:</p>
-<select id="proveedorFaltante">
-    <option value="">Seleccionar proveedor</option>
-    <option value="Alicante">Alicante</option>
-    <option value="Proveedor 2">Proveedor 2</option>
-    <option value="Proveedor 3">Proveedor 3</option>
-</select>
+                <div class="button-row">
+                    <button class="warning-btn" onclick="agregarFaltante()">Agregar</button>
+                    <button class="secondary-btn" onclick="verFaltantes()">Ver faltantes</button>
+                </div>
 
-<br><br>
+                <div class="field" style="margin-top: 18px;">
+                    <label for="filtroProveedor">Filtrar por proveedor</label>
+                    <input type="text" id="filtroProveedor" placeholder="Ej: Alicante">
+                </div>
 
-<button onclick="agregarFaltante()">Agregar faltante</button>
+                <button class="secondary-btn" onclick="filtrarFaltantes()">Filtrar</button>
+                <div id="listaFaltantes" class="list"></div>
+            </div>
+        </section>
 
-<hr>
+        <section id="tab-remitos" class="tab-panel">
+            <div class="panel">
+                <h2>Remitos</h2>
+                <p class="mini-note">Cuando llega la mercadería, saco foto del remito y lo registro.</p>
 
-<button onclick="verFaltantes()">Ver faltantes</button>
+                <div class="field">
+                    <label for="remitoProveedor">Proveedor</label>
+                    <select id="remitoProveedor">
+                        <option value="">Seleccionar proveedor</option>
+                    </select>
+                </div>
 
-<p>Filtrar por proveedor:</p>
-<input type="text" id="filtroProveedor" placeholder="Ej: Alicante">
+                <div class="field">
+                    <label for="remitoProducto">Producto recibido</label>
+                    <input type="text" id="remitoProducto" placeholder="Ej: Harina de arroz">
+                </div>
 
-<button onclick="filtrarFaltantes()">Filtrar</button>
+                <div class="field">
+                    <label for="remitoFecha">Fecha</label>
+                    <input type="date" id="remitoFecha">
+                </div>
 
-<div id="listaFaltantes"></div>
-<hr>
+                <div class="field">
+                    <label for="remitoImagen">Foto del remito</label>
+                    <input type="file" id="remitoImagen" accept="image/*" capture="environment">
+                </div>
 
-<h2>Proveedores</h2>
+                <div class="field">
+                    <label for="remitoObservaciones">Observaciones</label>
+                    <input type="text" id="remitoObservaciones" placeholder="Ej: Llegó tarde">
+                </div>
 
-<input type="text" id="nombreProveedor" placeholder="Nombre del proveedor">
+                <div class="button-row">
+                    <button class="primary-btn" onclick="guardarRemito()">Guardar remito</button>
+                    <button class="secondary-btn" onclick="verRemitos()">Ver remitos</button>
+                </div>
 
-<button onclick="agregarProveedor()">Agregar proveedor</button>
+                <div class="field" style="margin-top: 18px;">
+                    <label for="filtroRemitos">Filtrar remitos</label>
+                    <input type="text" id="filtroRemitos" placeholder="Ej: norte">
+                </div>
 
-<button onclick="verProveedores()">Ver proveedores</button>
+                <button class="secondary-btn" onclick="filtrarRemitos()">Filtrar remitos</button>
+                <div id="listaRemitos" class="list"></div>
+            </div>
+        </section>
 
-<div id="listaProveedores"></div>
+        <section id="tab-stock" class="tab-panel">
+            <div class="panel">
+                <h2>Productos</h2>
+                <div class="button-row">
+                    <button class="primary-btn" onclick="verProductos()">Ver productos</button>
+                </div>
+                <div id="listaProductos" class="list"></div>
+            </div>
 
-<button onclick="filtrarFaltantes()">Filtrar</button>
+            <div class="panel">
+                <h2>Agregar producto</h2>
 
-<div id="listaFaltantes"></div>
-<button> Productos nuevos</button>
-<button>faltantes</button>
-<!-- Formulario para agregar un producto -->
-<h2>Agregar producto</h2>
+                <div class="field">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" placeholder="Ej: Harina de arroz">
+                </div>
 
-<input type="text" id="nombre" placeholder="Nombre del producto">
-<select id="proveedorFaltante">
-    <option value="">Seleccionar proveedor</option>
-    <option value="Alicante">Alicante</option>
-    <option value="Proveedor 2">Proveedor 2</option>
-    <option value="Proveedor 3">Proveedor 3</option>
-</select>
+                <div class="field">
+                    <label for="proveedorProducto">Proveedor</label>
+                    <select id="proveedorProducto">
+                        <option value="">Seleccionar proveedor</option>
+                    </select>
+                </div>
 
+                <div class="field">
+                    <label for="precio">Precio</label>
+                    <input type="number" id="precio" placeholder="Precio">
+                </div>
 
-<input type="number" id="precio" placeholder="Precio">
+                <div class="field">
+                    <label for="cantidad">Cantidad</label>
+                    <input type="number" id="cantidad" placeholder="Cantidad">
+                </div>
 
-<input type="number" id="cantidad" placeholder="Cantidad">
+                <button class="success-btn" onclick="guardarProducto()">Guardar producto</button>
+            </div>
 
-<button onclick="guardarProducto()">Guardar producto</button>
+            <div class="panel">
+                <h2>Proveedores</h2>
 
+                <div class="field">
+                    <label for="nombreProveedor">Nombre del proveedor</label>
+                    <input type="text" id="nombreProveedor" placeholder="Nombre del proveedor">
+                </div>
 
-<script src="script.js"></script>
+                <div class="button-row">
+                    <button class="success-btn" onclick="agregarProveedor()">Agregar proveedor</button>
+                    <button class="secondary-btn" onclick="verProveedores()">Ver proveedores</button>
+                </div>
+
+                <div id="listaProveedores" class="list"></div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
 </body>
 </html>
