@@ -440,15 +440,18 @@ async function filtrarRemitos() {
 }
 
 async function solucionarFaltante(id) {
-    if (supabaseClient) {
-        await deleteRow('faltantes', id);
-    } else {
-        const faltantes = getLocalTable('faltantes');
-        const filtrados = faltantes.filter((faltante) => (faltante.id ?? faltantes.indexOf(faltante)) !== id);
-        setLocalTable('faltantes', filtrados);
+    if (!id) {
+        alert('No se pudo identificar el faltante');
+        return;
     }
 
-    verFaltantes();
+    const ok = await deleteRow('faltantes', id);
+    if (!ok) {
+        alert('No se pudo marcar como solucionado. Revisá los permisos de DELETE en Supabase.');
+        return;
+    }
+
+    await verFaltantes();
 }
 
 async function init() {
