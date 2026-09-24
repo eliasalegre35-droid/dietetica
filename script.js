@@ -223,7 +223,7 @@ async function verFaltantes() {
             <div class="item">
                 <p>❌ <strong>${faltante.nombre}</strong></p>
                 <p>Proveedor: ${faltante.proveedor}</p>
-                <button class="secondary-btn" onclick="solucionarFaltante(${faltante.id})">Solucionado</button>
+                <button class="secondary-btn" onclick="solucionarFaltante('${faltante.id}')">Solucionado</button>
             </div>
         `;
     });
@@ -249,7 +249,7 @@ async function filtrarFaltantes() {
             <div class="item">
                 <p>❌ <strong>${faltante.nombre}</strong></p>
                 <p>Proveedor: ${faltante.proveedor}</p>
-                <button class="secondary-btn" onclick="solucionarFaltante(${faltante.id})">Solucionado</button>
+                <button class="secondary-btn" onclick="solucionarFaltante('${faltante.id}')">Solucionado</button>
             </div>
         `;
     });
